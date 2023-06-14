@@ -1,0 +1,6 @@
+
+char a;
+char n;
+int v;
+real v;
+bool a;
