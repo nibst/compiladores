@@ -27,7 +27,13 @@
 %token TOKEN_ERROR       
 %{
     int yyerror(char* msg);
-%}
+%} 
+%left '&' '|' 
+%left '>' '<' OPERATOR_DIF OPERATOR_EQ OPERATOR_GE OPERATOR_LE
+%left '+' '-'
+%left '*' '/' 
+%left '~' 
+
 %%
 programa: decl
     ;
@@ -50,30 +56,34 @@ dec: type TK_IDENTIFIER '=' literal ';'
     |type TK_IDENTIFIER '[' LIT_INT ']' vector_ini ';'
     ;
 
-func_param_list: param tail
+func_param_list: func_param func_tail
     |
     ;
-param: type TK_IDENTIFIER
+func_param: type TK_IDENTIFIER
     ;
-tail: ',' param tail
+func_tail: ',' func_param func_tail
     |
     ;
 
 vector_ini: literal vector_ini
     |
     ;
+
+
 block: '{' lcmd '}'
     ;
+
 lcmd: cmd lcmd
     |
     ;
+
 cmd: TK_IDENTIFIER '=' expr ';'
     |TK_IDENTIFIER '['expr']' '=' expr ';'
     |KW_OUTPUT output_arguments_list ';'
     |KW_RETURN expr ';'
     |block
     |control_flow
-    |
+    |';'
     ;
 
 output_arguments_list: output_arg output_tail

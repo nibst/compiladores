@@ -885,27 +885,27 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 43 "scanner.l"
-{insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_STRING;}
+{insert(yytext,SYMBOL_LIT_STRING,g_hash_table,HASH_SIZE);return LIT_STRING;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 44 "scanner.l"
-{insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_CHAR;}
+{insert(yytext,SYMBOL_LIT_CHAR,g_hash_table,HASH_SIZE);return LIT_CHAR;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 45 "scanner.l"
-{insert(yytext,1,g_hash_table,HASH_SIZE);return TK_IDENTIFIER;}
+{insert(yytext,SYMBOL_IDENTIFIER,g_hash_table,HASH_SIZE);return TK_IDENTIFIER;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 46 "scanner.l"
-{insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_REAL;}
+{insert(yytext,SYMBOL_LIT_REAL,g_hash_table,HASH_SIZE);return LIT_REAL;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 47 "scanner.l"
-{insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_INT;}
+{insert(yytext,SYMBOL_LIT_INT,g_hash_table,HASH_SIZE);return LIT_INT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP

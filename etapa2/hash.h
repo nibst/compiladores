@@ -5,7 +5,11 @@
 #ifndef HASH_H
 #define HASH_H
 #define HASH_SIZE 997
-
+#define SYMBOL_LIT_INT 1 
+#define SYMBOL_LIT_CHAR 2
+#define SYMBOL_LIT_REAL 3
+#define SYMBOL_LIT_STRING 4
+#define SYMBOL_IDENTIFIER 7
 typedef struct hash_node{
     int type;
     char* text;
