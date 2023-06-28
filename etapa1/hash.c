@@ -1,3 +1,4 @@
+//Níkolas Padão Schuster
 #include "hash.h"
 #include <stdio.h>
 #include <stdlib.h>

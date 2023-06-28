@@ -1,3 +1,6 @@
+//Níkolas Padão Schuster
+
+
 //hash linked list
 #ifndef HASH_H
 #define HASH_H
@@ -8,8 +11,6 @@ typedef struct hash_node{
     char* text;
     struct hash_node* next; 
 }Hash;
-
-extern Hash* g_hash_table[HASH_SIZE];
 
 Hash* insert(char* text, int type, Hash* hash_table[], int hash_size);
 Hash* search(char* text, Hash* hash_table[], int hash_size);

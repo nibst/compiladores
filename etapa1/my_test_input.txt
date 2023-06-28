@@ -1,0 +1,39 @@
+char
+int
+real
+bool
+if
+then
+else
+loop
+input
+output
+return
+<=
+>=
+==
+!=
+identificador
+2
+2.5
+'c'
+"string"
+?
+"\a\"\"\""
+"\a\"\"\\*\llll""
+"\n"
+"n"
+"""""
+"
+aqw
+"
+char123inta
+\\\"string
+zona" ///
+\\oiqoqwe char bla \n \bla \n 
+123
+\\\ abc bca int char lalala ?: 
+comenta 12371 1o2uoqw \n loop if
+aaa///
+\\commmmment
+""

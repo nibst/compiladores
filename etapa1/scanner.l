@@ -1,13 +1,19 @@
 
-%{
+/*Níkolas Padão Schuster*/
 
+%{
+    #include "hash.c"
     #include "tokens.h"
+    Hash* g_hash_table[HASH_SIZE];
+
     int running = 1;
     int line_number = 1;
 
 %}
 
-%x COMMENT
+%x SINGLE_LINE_COMMENT
+%x MULTI_LINE_COMMENT
+
 
 %%
 char    {return KW_CHAR;}
@@ -21,13 +27,12 @@ loop    {return KW_LOOP;}
 input   {return KW_INPUT;}
 output  {return KW_OUTPUT;}
 return  {return KW_RETURN;}
-
 "\n"    {++line_number;}
+"\\\\" {BEGIN(SINGLE_LINE_COMMENT);}
 
-"//".* {}
-"\\\\\\" {BEGIN(COMMENT);}
-<COMMENT>"\n"    {++line_number;}
-<COMMENT>"///" {BEGIN(INITIAL);}
+"\\\\\\" {BEGIN(MULTI_LINE_COMMENT);}
+
+
 
 [-,;()[\]{}=+*/%<>&|~] {return yytext[0];}
 "<="    {return OPERATOR_LE;}
@@ -35,19 +40,24 @@ return  {return KW_RETURN;}
 "=="    {return OPERATOR_EQ;}
 "!="    {return OPERATOR_DIF;}
 
-\".*\"          {return LIT_STRING;}
-\'.\'           {return LIT_CHAR;}
-[a-zA-Z._]+     {return TK_IDENTIFIER;}
-[0-9]+[.][0-9]+ {return LIT_REAL;}
-[0-9]+          {return LIT_INT;}
+\"(\\.|[^\n"])*\"          {insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_STRING;}
+\'.\'           {insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_CHAR;}
+[a-zA-Z._]+     {insert(yytext,1,g_hash_table,HASH_SIZE);return TK_IDENTIFIER;}
+[0-9]+[.][0-9]+ {insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_REAL;}
+[0-9]+          {insert(yytext,1,g_hash_table,HASH_SIZE);return LIT_INT;}
 
 [ \t]     {}
 
 . {return TOKEN_ERROR;}
 
-%%
+<SINGLE_LINE_COMMENT>"\n" {++line_number;BEGIN(INITIAL);}
+<SINGLE_LINE_COMMENT>.      {}
 
-#include "hash.h"
+<MULTI_LINE_COMMENT>"///" {BEGIN(INITIAL);}
+<MULTI_LINE_COMMENT>"\n"    {++line_number;}
+<MULTI_LINE_COMMENT>.      {}
+
+%%
 int getLineNumber(void){
     return line_number;
 }
@@ -56,25 +66,10 @@ int isRunning(void){
 }
 
 void initMe(void){
-    Hash* g_hash_table[HASH_SIZE];
     init(g_hash_table,HASH_SIZE);
 }
-
-int main(int argc, char **argv)
-{
-    int token = 0;
-    initMe();
-    while (isRunning())
-    {
-        token = yylex();
-        if (!isRunning())
-            break;    
-        printf("token: %d\n",token);
-    }
-}
-
-
 int yywrap(){
     running = 0;
     return 1;
 }
+#include "main.c"
