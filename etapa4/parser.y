@@ -2,6 +2,7 @@
 %{
     #include "hash.h"
     #include "ast.h"
+    #include "semantic.h"
     #include <stdlib.h>
     #include <stdio.h>
     int getLineNumber(void);
@@ -66,9 +67,9 @@ vector_ini
 %left '~' 
 
 %%
-programm: decl {decompile($1);}
+programm: decl {decompile($1); checkAndSetDeclaration($1);}
     ;
-decl: dec decl {$$ = createAST(AST_DEC_LIST,0,$1,$2,0,0);}
+decl: dec decl {$$ = createAST(AST_DEC_LIST,0,$1,$2,0,0); }
     | {$$ = 0;}
     ;
 
