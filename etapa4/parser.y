@@ -67,7 +67,12 @@ vector_ini
 %left '~' 
 
 %%
-programm: decl {decompile($1); checkAndSetDeclaration($1);}
+programm: decl {
+                checkAndSetDeclaration($1);
+                setAstExpressionsDatatype($1);
+                checkOperands($1);
+                checkUndeclared();
+                }
     ;
 decl: dec decl {$$ = createAST(AST_DEC_LIST,0,$1,$2,0,0); }
     | {$$ = 0;}

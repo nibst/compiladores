@@ -1,0 +1,45 @@
+\\ UFRGS - Compiladores - Marcelo Johann - 2023/1
+
+char c='x';
+char d=100;
+int a.a='A';
+int i=1;
+int v[1] 'a' 0 0 0.0 0 0 0 0 0 0;
+int matrix[100]; 
+real f=2.5;
+int a = 0;
+int e = 0;
+int g = 0;
+real n= 0.0;
+int h = 1;
+int x = 0;
+
+\\\
+Este eh um comentario 
+de multiplas 
+linhas
+///
+int func(){
+
+}
+int main (int x, int n)
+  {
+  a = a + i + 2;
+  a.a = 0;
+  d = d - i;
+  v[d] = 55;
+  output v[5];
+  output d;
+  a = func();
+  output "Digite um numero: \n";
+  d = input(int);
+  output "Digite mais um numero: \n";
+  if (i<10) loop
+    {
+    \\i = incn(i,1,2,e,f,g,h);
+    \\d = incn(d,d);
+    }
+  output "Incrementado algumas vezes a fica ",(2+x),a,"\n";
+  return 2;
+  }
+

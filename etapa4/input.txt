@@ -8,7 +8,6 @@ int v[10] 'a' 0 0 0 0 0 0 0 0 0;
 int matrix[100]; 
 real f=2.5;
 bool b = 0;
-int b = 0;
 \\\
 Este eh um comentario 
 de multiplas 
@@ -19,6 +18,7 @@ int main(int aa, int bb){
 }
 int main (int x, int n)
   {
+  b = b + i + 2;
   a.a = 0;
   d = d - i;
   d = 5;
@@ -63,6 +63,6 @@ int incn (int x, int n )
   return x + n;
   ;
   }
-
+int a=9;
 bool abc = 0;
 \\ end of file

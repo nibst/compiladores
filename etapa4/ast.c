@@ -40,7 +40,6 @@ const char* type_to_str[] =
     [AST_VEC_DEC] = "AST_VEC_DEC",
     [AST_VAR_DEC] = "AST_VAR_DEC",
     [AST_VEC_INIT] = "AST_VEC_INIT",
-    [AST_ID_DEC] = "AST_ID_DEC",
     [AST_EMPTY_CMD] = "AST_EMPTY_CMD",
     [AST_PARENTHESIS] = "AST_PARENTHESIS",
     [AST_NOT] = "AST_NOT" ,
@@ -98,7 +97,7 @@ void printAST(AST *node, int level){
     }
     else{
         fprintf(stderr,"ast(");
-        fprintf(stderr,"%s",type_to_str[node->type]);
+        fprintf(stderr,"%s,datatype(%d)",type_to_str[node->type],node->datatype);
 
         if (node->symbol != 0)
             fprintf(stderr,",%s\n",node->symbol->text);
@@ -277,7 +276,6 @@ void printCommandList(AST* node){
     }
     printAST(node,0);
 }
-
 void decompile(AST *node){   
     if(node == 0)
         return;

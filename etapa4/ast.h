@@ -45,18 +45,30 @@ typedef enum node_type
     AST_VEC_DEC,
     AST_VAR_DEC,
     AST_VEC_INIT,
-    AST_ID_DEC,
     AST_EMPTY_CMD,
     AST_PARENTHESIS
 } ASTNodeType;
 
+typedef enum ast_node_datatype{
+    AST_DATATYPE_ANY,
+    AST_DATATYPE_INT,
+    AST_DATATYPE_CHAR,
+    AST_DATATYPE_REAL,
+    AST_DATATYPE_BOOL,
+    AST_DATATYPE_STRING
+} ASTNodeDataType;
+
 typedef struct ast_node{
     ASTNodeType type;
+    ASTNodeDataType datatype; //to check if node is INT,CHAR,REAL or BOOL (for semantic purposes)
     HashNode *symbol;
     struct ast_node *sons[MAX_SONS];
+
 }AST;
 AST* createAST(ASTNodeType type, HashNode *symbol, AST* s0,  AST* s1,  AST* s2,  AST* s3);
 void printAST(AST *node,int level);
+
+//it assumes that node is a command list or declaration list, never the command itself
 void decompile(AST *node);
 void printCommand(AST *node);
 void printCommandList(AST* node);

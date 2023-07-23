@@ -2,12 +2,10 @@
 /*Níkolas Padão Schuster*/
 
 %{
-    #include "ast.h"
     #include "hash.h"
+    #include "ast.h"
     #include "y.tab.h"
-    
     HashNode* g_hash_table[HASH_SIZE];
-
     int running = 1;
     int line_number = 1;
 
@@ -71,7 +69,6 @@ void initMe(void){
     init(g_hash_table,HASH_SIZE);
 }
 int yywrap(){
-    printHash(g_hash_table,HASH_SIZE);
     running = 0;
     return 1;
 }

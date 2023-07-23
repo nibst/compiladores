@@ -49,7 +49,20 @@ void printHash(HashNode* hash_table[],int hash_size){
     HashNode *node;
     for(int i=0; i<hash_size;++i){
         for (node=hash_table[i]; node; node = node->next){
-            printf("Hash Table[%d] has %s \n",i,node->text); 
+            printf("Hash Table[%d] has %s, type %d, datatype %d\n",i,node->text,node->type,node->datatype); 
         }
     }
+}
+int hashCheckUndeclared(HashNode* hash_table[],int hash_size){
+    int undeclared = 0;
+    HashNode *node;
+    for(int i=0; i<hash_size;++i){
+        for (node=hash_table[i]; node; node = node->next){
+            if (node->type == SYMBOL_IDENTIFIER){
+                fprintf(stderr,"Semantic ERROR: identifier %s undeclared\n",node->text); 
+                ++undeclared;
+            }
+        }
+    }
+    return undeclared;
 }
