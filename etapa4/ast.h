@@ -3,9 +3,9 @@
 #ifndef AST_HEADER
 #define AST_HEADER
 #include "hash.h"
-
+#include "types.h"
 #define MAX_SONS 4 
-// Os tipos possiveis de nodo da arvore
+// All possible node types
 typedef enum node_type
 {
     AST_SYMBOL,
@@ -49,18 +49,11 @@ typedef enum node_type
     AST_PARENTHESIS
 } ASTNodeType;
 
-typedef enum ast_node_datatype{
-    AST_DATATYPE_ANY,
-    AST_DATATYPE_INT,
-    AST_DATATYPE_CHAR,
-    AST_DATATYPE_REAL,
-    AST_DATATYPE_BOOL,
-    AST_DATATYPE_STRING
-} ASTNodeDataType;
+;
 
 typedef struct ast_node{
     ASTNodeType type;
-    ASTNodeDataType datatype; //to check if node is INT,CHAR,REAL or BOOL (for semantic purposes)
+    DataType datatype; //to check if node is INT,CHAR,REAL or BOOL (for semantic purposes)
     HashNode *symbol;
     struct ast_node *sons[MAX_SONS];
 

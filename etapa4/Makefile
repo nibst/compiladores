@@ -1,7 +1,7 @@
 # Makefile for single compiler call
 
-etapa4: main.o lex.yy.o y.tab.o hash.o ast.o semantic.o
-	gcc main.o lex.yy.o y.tab.o hash.o ast.o semantic.o -o etapa4
+etapa4: main.o lex.yy.o y.tab.o hash.o ast.o semantic.o types.o
+	gcc main.o lex.yy.o y.tab.o hash.o ast.o semantic.o types.o -o etapa4
 
 main.o: main.c
 	gcc -c main.c
@@ -12,6 +12,8 @@ ast.o: ast.c
 	gcc -c ast.c
 semantic.o: semantic.c
 	gcc -c semantic.c
+types.o: types.c
+	gcc -c types.c
 y.tab.o: y.tab.c
 	gcc -c y.tab.c
 lex.yy.o: lex.yy.c

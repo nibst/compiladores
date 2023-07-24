@@ -15,15 +15,11 @@
 #define SYMBOL_VECTOR 10
 
 //for setting types of variables
-#define DATATYPE_INT 1
-#define DATATYPE_CHAR 2
-#define DATATYPE_REAL 3
-#define DATATYPE_BOOL 4
-
+#include "types.h"
 //hash linked list
 typedef struct hash_node{
     int type;
-    int datatype;
+    DataType datatype;
     char* text;
     struct hash_node* next; 
 }HashNode;

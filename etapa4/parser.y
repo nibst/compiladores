@@ -67,11 +67,9 @@ vector_ini
 %left '~' 
 
 %%
-programm: decl {
-                checkAndSetDeclaration($1);
-                setAstExpressionsDatatype($1);
-                checkOperands($1);
-                checkUndeclared();
+programm: decl {semanticAnalysis($1);
+                if(getSemanticErrors()>0)
+                    exit(4);
                 }
     ;
 decl: dec decl {$$ = createAST(AST_DEC_LIST,0,$1,$2,0,0); }

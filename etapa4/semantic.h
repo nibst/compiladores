@@ -6,12 +6,16 @@
 
 extern int SemanticErrors;
 
+void semanticAnalysis(AST* node);//perform all semantic analysis
 void checkAndSetDeclaration(AST* node);//set variables that are declared, undeclared variable are not setted
 void checkUndeclared();
-int getSemanticErrors();//return SemanticErrors
-int getDeclarationDataType(AST *declartion_node);
+void checkFunctionReturnType(DataType expected_return_type, AST *node);
 void checkOperands(AST *node);
 void checkNature(AST *node); //check if function is used as function, vector is used as vector and so on
 void setAstExpressionsDatatype(AST *expr_node);
-int isCompatibleASTDataType(ASTNodeDataType datatype1, ASTNodeDataType datatype2);
+void checkFunctionParameterVersusArguments(AST *node);
+void checkVectorInitialization(AST *node);
+
+int getSemanticErrors();//return SemanticErrors
+
 #endif /*SEMANTIC_HEADER*/
