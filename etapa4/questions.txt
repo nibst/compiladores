@@ -1,1 +1,0 @@
-Why do i use a datatype for hash and a datatype for AST?? Cant i just use datatype for each node of AST?
