@@ -1,7 +1,7 @@
 # Makefile for single compiler call
 
-etapa6: main.o lex.yy.o y.tab.o hash.o ast.o semantic.o types.o TAC.o asm.o
-	gcc main.o lex.yy.o y.tab.o hash.o ast.o semantic.o types.o TAC.o  asm.o -o etapa6
+etapa6: main.o lex.yy.o y.tab.o hash.o ast.o semantic.o types.o TAC.o asm.o stringList.o
+	gcc main.o lex.yy.o y.tab.o hash.o ast.o semantic.o types.o TAC.o  asm.o  stringList.o -o etapa6
 	gcc -c -Wall main.c
 
 hash.o: hash.c
@@ -16,6 +16,8 @@ TAC.o: TAC.c
 	gcc -c TAC.c
 asm.o: asm.c
 	gcc -c asm.c
+stringList.o: stringList.c
+	gcc -c stringList.c
 y.tab.o: y.tab.c
 	gcc -c y.tab.c
 lex.yy.o: lex.yy.c

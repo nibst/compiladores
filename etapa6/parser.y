@@ -11,6 +11,9 @@
     int getLineNumber(void);
     int yylex();
     int yyerror(char* msg);
+    void hashSetDeclaredValue(HashNode* node, char* value);
+    void hashSetFunctionParameters(HashNode* hash_node, AST* function_params_node);
+    void hashSetVectorDeclaredValues(HashNode* hash_node, AST* vector_ini_node);
 
 %}
 %union
@@ -73,13 +76,15 @@ vector_ini
 programm: decl {
                 TAC* code;
                 semanticAnalysis($1);
-                //if(getSemanticErrors()>0)
-                    //exit(4);
+                if(getSemanticErrors()>0)
+                    exit(4);
                 printAST($1,0);
                 code = generateCode($1);
                 tacPrintBackwards(code);
                 code = tacReverse(code);
                 generateAsm(code);
+                printHash(g_hash_table,HASH_SIZE);
+
                 }
     ;
 decl: dec decl {$$ = createAST(AST_DEC_LIST,0,$1,$2,0,0); }
@@ -98,8 +103,8 @@ type: KW_INT    {$$ = createAST(AST_TYPE_INT,0,0,0,0,0);}
     | KW_REAL   {$$ = createAST(AST_TYPE_REAL,0,0,0,0,0);}
 
 dec: type TK_IDENTIFIER '=' literal ';'     {$$ = createAST(AST_VAR_DEC,0,$1,createAST(AST_SYMBOL,$2,0,0,0,0),$4,0); hashSetDeclaredValue($2,$4->symbol->text); }
-    |type TK_IDENTIFIER'(' func_param_list ')' block {$$ = createAST(AST_FUNC_DEC,0,$1,createAST(AST_SYMBOL,$2,0,0,0,0),$4,$6);}
-    |type TK_IDENTIFIER '[' LIT_INT ']' vector_ini ';'  {$$ = createAST(AST_VEC_DEC,0,$1,createAST(AST_SYMBOL,$2,0,0,0,0),createAST(AST_SYMBOL,$4,0,0,0,0),$6);}
+    |type TK_IDENTIFIER'(' func_param_list ')' block {$$ = createAST(AST_FUNC_DEC,0,$1,createAST(AST_SYMBOL,$2,0,0,0,0),$4,$6); hashSetFunctionParameters($2,$4);}
+    |type TK_IDENTIFIER '[' LIT_INT ']' vector_ini ';'  {$$ = createAST(AST_VEC_DEC,0,$1,createAST(AST_SYMBOL,$2,0,0,0,0),createAST(AST_SYMBOL,$4,0,0,0,0),$6);hashSetVectorDeclaredValues($2,$$);}
     ;
 
 func_param_list: type TK_IDENTIFIER func_param_tail  {$$ = createAST(AST_FUNC_PARAMS,0,$1,createAST(AST_SYMBOL,$2,0,0,0,0),$3,0);}
@@ -188,4 +193,62 @@ control_flow: KW_IF parenthesis_expr cmd             {$$ = createAST(AST_IF,0,$2
 int yyerror(char* msg){
     fprintf(stderr,"Syntax error at %d\n",getLineNumber());
     exit(3);
+}
+//convert char to a string that represents its int value
+//EX: 'x' => "120"
+char* charToIntString(char c){
+
+    // Extract the character between single quotes and convert it to an integer.
+    int int_value = (int)c;
+    
+    // Convert the integer to a string and allocate memory for vector_ini_nodeit.
+    int str_size = snprintf(NULL, 0, "%d", int_value) + 1; // Calculate the size of the string.
+    char* resultant_string = (char*)malloc(str_size*sizeof(char));
+
+    // Convert the integer to a string and store it in declared_value.
+    snprintf(resultant_string, str_size, "%d", int_value);
+    return resultant_string;
+}
+void hashSetDeclaredValue(HashNode* node, char* value){
+    if (value  == NULL){
+        node->declared_values = NULL;
+        return;
+    }
+    if(value[0] == '\''){
+        char* intStr = charToIntString(value[1]);
+        appendStringList(&(node->declared_values),intStr);
+    }
+    else{
+       appendStringList(&(node->declared_values),value);
+    }
+}
+void hashSetFunctionParameters(HashNode* hash_node, AST* function_params_node){
+    if (function_params_node == 0)
+        return;
+    for (AST* ast_node = function_params_node; ast_node; ast_node = ast_node->sons[2]) {
+        char* param = ast_node->sons[1]->symbol->text;
+        appendStringList(&(hash_node->func_params),param);
+    }
+}
+void hashSetVectorDeclaredValues(HashNode* hash_node, AST* vector_dec_node){
+    if (vector_dec_node == 0){
+        return;
+    }
+    AST *vector_ini_node = vector_dec_node->sons[3];
+    //no initialization
+    if(vector_ini_node == NULL){
+        char* vector_declared_size = vector_dec_node->sons[2]->symbol->text;
+        for (int i=0; i<atoi(vector_declared_size); i++)
+            appendStringList(&(hash_node->declared_values), "0");
+    }
+    else{
+        char* declared_value;
+        //go through all nodes in vector initialization and store the constant declared value
+        for (AST* ast_node = vector_ini_node; ast_node; ast_node = ast_node->sons[1]){
+            declared_value = ast_node->sons[0]->symbol->text;
+            if(declared_value[0] == '\'')
+                declared_value = charToIntString(declared_value[1]); //take the value inside of ' '
+            appendStringList(&(hash_node->declared_values), declared_value);
+        }
+    }
 }

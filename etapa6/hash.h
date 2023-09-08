@@ -16,12 +16,18 @@
 
 //for setting types of variables
 #include "types.h"
+#include "stringList.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+
 //hash linked list
 typedef struct hash_node{
     int type;
     DataType datatype;
     char* text;
-    char* declared_value; //for generating ASM, just need to be printable (thats why the char*)
+    StringList* func_params; //store function parameters, if is a function
+    StringList* declared_values; //for generating ASM, just need to be printable (thats why is string list). this is a list of strings just for the vector initialization
     struct hash_node* next; 
 }HashNode;
 extern HashNode* g_hash_table[HASH_SIZE];
@@ -32,7 +38,7 @@ int computeAddress(char* text,int hash_size);
 void init(HashNode* hash_table[], int hash_size);
 void printHash(HashNode* hash_table[],int hash_size);
 int hashCheckUndeclared(HashNode* hash_table[],int hash_size);
-void hashSetDeclaredValue(HashNode* node, char* value);
+
 HashNode* makeTemp(); //pass hash_table?
 HashNode* makeLabel();
 #endif /* HASH_H */

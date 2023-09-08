@@ -66,32 +66,6 @@ int hashCheckUndeclared(HashNode* hash_table[],int hash_size){
     }
     return undeclared;
 }
-void hashSetDeclaredValue(HashNode* node, char* value){
-    if (value  == NULL){
-        node->declared_value = NULL;
-        return;
-    }
-    if(value[0] == '\''){
-        // Extract the character between single quotes and convert it to an integer.
-        int int_value = (int)value[1];
-        
-        // Convert the integer to a string and allocate memory for it.
-        int str_size = snprintf(NULL, 0, "%d", int_value) + 1; // Calculate the size of the string.
-        node->declared_value = (char*)malloc(str_size);
-
-        // Convert the integer to a string and store it in declared_value.
-        snprintf(node->declared_value, str_size, "%d", int_value);
-    }
-    else{
-        int str_size = strlen(value) + 1; // Calculate the size of the string.
-        node->declared_value = (char*)malloc(str_size);
-        
-        strcpy(node->declared_value, value);
-    }
-}
-
-
-
 HashNode* makeTemp(){
     static int serial = 0;
     char buffer[256] = "";

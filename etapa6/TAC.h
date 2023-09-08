@@ -31,7 +31,13 @@ typedef enum tac_type
     TAC_END_FUN,
     TAC_ARGUMENTS,
     TAC_FUNC_CALL,
-    TAC_VEC_DEC
+    TAC_VEC_DEC,
+    TAC_OUTPUT_ARG,
+    TAC_FUNC_ARG,
+    TAC_VEC_INIT,
+    TAC_VEC_READ,
+    TAC_VEC_WRITE,
+    
 } TACType;
 typedef struct tac_node
 {

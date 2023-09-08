@@ -1,0 +1,18 @@
+O que acabou ficando de fora da implementação foi a negação (~), o and (&) e o or(|). 
+Algumas questões que exigem diferentes comandos para numero real ou int podem ter ficado de fora também.
+
+Com o `input.txt` temos o seguinte output:
+
+97Digite um numero: 
+2
+Digite mais um numero: 
+6400 Incrementado algumas vezes a fica 6402 2
+Nao tem como isso...
+
+Com o input2.txt temos o seguinte output:
+1
+escolha um numero: 4
+1.500000
+2.200000
+4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 Nao tem como isso...
+

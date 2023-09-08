@@ -39,21 +39,27 @@ void setSymbolDataType(AST *symbol_node){
     //if hash datatype not setted, then it is a literal
     if(symbol_node->symbol->datatype == 0){
         switch (symbol_node->symbol->type){
-        case SYMBOL_LIT_INT:
-            symbol_node->datatype = DATATYPE_INT;
-            break;
-        case SYMBOL_LIT_REAL:
-            symbol_node->datatype = DATATYPE_REAL;
-            break;
-        case SYMBOL_LIT_CHAR:
-            symbol_node->datatype = DATATYPE_CHAR;
-            break;
-        case SYMBOL_LIT_STRING:
-            symbol_node->datatype = DATATYPE_STRING;
-        default:
-            symbol_node->datatype = DATATYPE_NA;
-            break;
-        }
+            case SYMBOL_LIT_INT:
+                symbol_node->datatype = DATATYPE_INT;
+                symbol_node->symbol->datatype = DATATYPE_INT;
+                break;
+            case SYMBOL_LIT_REAL:
+                symbol_node->datatype = DATATYPE_REAL;
+                symbol_node->symbol->datatype = DATATYPE_REAL;
+                break;
+            case SYMBOL_LIT_CHAR:
+                symbol_node->datatype = DATATYPE_CHAR;
+                symbol_node->symbol->datatype = DATATYPE_CHAR;
+                break;
+            case SYMBOL_LIT_STRING:
+                symbol_node->datatype = DATATYPE_STRING;
+                symbol_node->symbol->datatype = DATATYPE_STRING;
+                break;
+            default:
+                symbol_node->datatype = DATATYPE_NA;
+                symbol_node->symbol->datatype = DATATYPE_NA;
+                break;
+            }
     }
     //else is a variable, already setted previously by checkAndSetDeclaration
     else{

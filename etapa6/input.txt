@@ -23,8 +23,8 @@ int main (int xa, int na, int e, int g, int h)
   a.a = 0;
   d = d - i;
   d = 5;
-  v[d] = 55;
-  output v[5];
+  v[d] = v[0];
+  output v[d];
   output d;
   i = 2;
   a = func();
@@ -37,8 +37,8 @@ int main (int xa, int na, int e, int g, int h)
     i = incn(i,1);
     d = incn(d,d);
     }
-
-  output "Incrementado algumas vezes a fica ",(2+x),a,"\n";
+  output x," ";
+  output "Incrementado algumas vezes a fica ",(2+x)," ",a,"\n";
 
   if (a==15)
     {

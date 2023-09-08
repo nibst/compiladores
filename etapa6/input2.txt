@@ -1,0 +1,40 @@
+\\ UFRGS - Compiladores - Marcelo Johann - 2023/1
+
+char c='x';
+int d=100;
+int a= 2;
+int i=1;
+int x = 1;
+real xx = 1.2;
+real vv[2] 2.2 3.2;
+\\\
+Este eh um comentario 
+de multiplas 
+linhas
+///
+int foo(int xa){
+  output "escolha um numero: ";
+  xa = input(int);
+  
+  return xa;
+}
+int main ()
+  {
+  d = d - i;
+  a = 3/2;
+  output a, "\n";
+  a = foo(a);
+  xx = 3.0/2.0;
+  output xx,"\n"; 
+  output vv[0],"\n";
+  if(a<30) loop{
+    output  a, " ";
+    a=a+1;
+  }
+  if ((a<100))
+    {
+    output "Nao tem como isso...\n";
+    }
+  else
+    output "OK!\n"; 
+  }

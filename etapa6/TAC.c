@@ -51,6 +51,11 @@ const char* tac_type_to_str[] ={
     [TAC_END_FUN] = "TAC_END_FUN",
     [TAC_FUNC_CALL] = "TAC_FUNC_CALL",
     [TAC_VEC_DEC] = "TAC_VEC_DEC",
+    [TAC_OUTPUT_ARG] = "TAC_OUTPUT_ARG",
+    [TAC_FUNC_ARG] = "TAC_FUNC_ARG",
+    [TAC_VEC_INIT] = "TAC_VEC_INIT",
+    [TAC_VEC_READ] = "TAC_VEC_READ",
+    [TAC_VEC_WRITE] = "TAC_VEC_WRITE",
 };
 
 
@@ -162,20 +167,23 @@ TAC *generateCode(AST *node)
         //probably dont need this tacJoin(code[1], code[2]) but just in case (because there is no expr on declarations)
         result = tacJoin(tacJoin(code[1], code[2]), tacCreate(TAC_COPY, (code[1])? code[1]->result:0, (code[2]) ? code[2]->result : 0, 0));
         break;
-
     case AST_VEC_DEC:
         //probably dont need to join with code[1] and code[2] but just in case
         result = tacJoin(tacJoin(code[1], tacJoin(code[2],code[3])),tacCreate(TAC_VEC_DEC, code[1]?code[1]->result:0, code[2]?code[2]->result:0,0));
         break;
     //vec dec will receive the N args of vec init, like it would be done with a function
     case AST_VEC_INIT:
-    case AST_FUNC_ARGS:
+        result = tacJoin(code[0],tacJoin(tacCreate(TAC_VEC_INIT,code[0]?code[0]->result:0,0,0),code[1]));
+        break;
+    case AST_FUNC_ARGS: 
+        result = tacJoin(code[0],tacJoin(tacCreate(TAC_FUNC_ARG,code[0]?code[0]->result:0,0,0),code[1]));
+        break;
     case AST_OUTPUT_ARGS:
-        result = tacJoin(code[0],tacJoin(tacCreate(TAC_ARGUMENTS,code[0]?code[0]->result:0,0,0),code[1]));
+        result = tacJoin(code[0],tacJoin(tacCreate(TAC_OUTPUT_ARG,code[0]?code[0]->result:0,0,0),code[1]));
         break;
     case AST_OUTPUT:
         //weird thing to get first argument from output 
-        result = tacJoin(tacJoin(tacJoin(code[0],tacCreate(TAC_ARGUMENTS,code[0]?code[0]->result:0,0,0)),code[1]),tacCreate(TAC_OUTPUT,0,0,0));
+        result = tacJoin(tacJoin(tacJoin(code[0],tacCreate(TAC_OUTPUT_ARG,code[0]?code[0]->result:0,0,0)),code[1]),tacCreate(TAC_OUTPUT,0,0,0));
         break;
     case AST_FUNC_DEC:
         result = tacJoin(tacJoin(tacCreate(TAC_BEGIN_FUN,code[1]?code[1]->result:0,0,0),tacJoin(code[2],code[3])),tacCreate(TAC_END_FUN,code[1]?code[1]->result:0,0,0));
